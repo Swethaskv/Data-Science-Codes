@@ -1,0 +1,31 @@
+groc <- read.csv("C:/Users/USER/Downloads/assignment sets/assoication rules/groceries (1).csv",header=T,colClasses = "factor")
+View(groc)
+str(groc)
+##finding assoication rules
+library(arules)
+rule <- apriori(groc)
+summary(rule)
+rule1 <- apriori(groc,parameter=list(minlen=1,maxlen=5,support=0.2))
+inspect(rule1)
+
+rule2 <- apriori(groc,parameter=list(minlen=2,maxlen=3,support=0.2))
+inspect(rule2)
+rule3 <- apriori(groc,parameter=list(minlen=3,maxlen=8,support=0.2,conf=.5))
+inspect(rule3)
+plot(rule3)
+
+r <- inspect(head(sort(rule1,by="lift")))
+head(quality(rule1))
+library(arulesViz)
+plot(rule1)
+summary(groc)
+rule4 <- apriori(groc,parameter=list(minlen=1,maxlen=3,support=0.02))
+#finding interesting rules
+rule6 <- apriori(groc,parameter=list(minlen=2,maxlen=3,support=0.2,conf=.5))
+appearance=list(rhs=c("semi.finished.bread=","ready.soups="),lhs=("margarine="))
+inspect(rule6)
+plot(rule6)
+windows()
+plot(rule6,method="grouped")
+plot(rule6,method="graph")
+
